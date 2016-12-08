@@ -1,4 +1,28 @@
 #!/usr/bin/env python3
+'''\
+Usage: {} [-d 1-8] [-r RESHAPE_MODE] [-o ORDERING] INFILE OUTFILE
+
+Creates a PNG image with the same pixels as the input, but in a different
+order. By default, sorts same-pixel clusters by frequency.
+    
+Options:
+    -d      Downsample colors by n bits where 0 <= n <= 8 (default: 0)
+    -r      Reshape the output image (default: none)
+    -o      Order the output in a different way (default: freq)
+
+Orderings:
+    freq    (default) Most common pixels first
+    rfreq   Least common pixels first
+    shuf    Like freq, but shuffle the color clusters
+    light   Lightest pixels first
+    dark    Darkest pixels first
+
+Reshape modes:
+    none    (default) Output is the same dimensions as the input
+    square  Output is a square of (approximately) equal-area to the input
+    tall    Output height is the taller of the input dimensions
+    wide    Output width is the taller of the input dimensions
+'''
 
 import math
 import png
@@ -131,28 +155,5 @@ def main():
 try:
     main()
 except (Exception, KeyboardInterrupt):
-    print('''\
-Usage: {} [-d 1-8] [-r RESHAPE_MODE] [-o ORDERING] INFILE OUTFILE
-
-Creates a PNG image with the same pixels as the input, but in a different
-order. By default, sorts same-pixel clusters by frequency.
-    
-Options:
-    -d      Downsample colors by n bits where 0 <= n <= 8 (default: 0)
-    -r      Reshape the output image (default: none)
-    -o      Order the output in a different way (default: freq)
-
-Orderings:
-    freq    (default) Most common pixels first
-    rfreq   Least common pixels first
-    shuf    Like freq, but shuffle the color clusters
-    light   Lightest pixels first
-    dark    Darkest pixels first
-
-Reshape modes:
-    none    (default) Output is the same dimensions as the input
-    square  Output is a square of (approximately) equal-area to the input
-    tall    Output height is the taller of the input dimensions
-    wide    Output width is the taller of the input dimensions
-    '''.format(sys.argv[0]))
+    print(__doc__.format(sys.argv[0]))
     sys.exit(1)
